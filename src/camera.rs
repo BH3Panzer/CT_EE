@@ -40,4 +40,14 @@ pub fn handle_camera(camera: &mut Camera3D, dt: f32, rl: &mut RaylibHandle) {
         camera.position.z += 25.0 * dt;
         camera.target.z += 25.0 * dt;
     }
+
+    if rl.get_mouse_wheel_move() > 0.0 {
+        camera.position.y -= 25.0 * dt;
+        if camera.position.y < 0.0 {
+            camera.position.y = 0.0;
+        }
+    } else if rl.get_mouse_wheel_move() < 0.0 {
+        camera.position.y += 25.0 * dt;
+        
+    }
 }

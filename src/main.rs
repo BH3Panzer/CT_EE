@@ -20,8 +20,8 @@ fn main() {
 
     let mut debug_mode: bool = false;
     let mut camera: Camera3D = Camera3D::perspective(
-        Vector3::new(0.0, 10.0, 10.0),
-        Vector3::new(0.0, 0.0, 0.0),
+        Vector3::new(0.0, 40.0, 10.0),
+        Vector3::new(0.0, 0.0, -20.0),
         Vector3::new(0.0, 1.0, 0.0),
         80.0,
     );
@@ -43,23 +43,25 @@ fn main() {
 
         
 
-        d.clear_background(Color::RAYWHITE);
-
-        if debug_mode {
-            d.draw_fps(5, 0);
-            d.draw_text(dt.to_string().as_str(), 5, 20, 20, Color::GRAY);
-        }
+        d.clear_background(Color::BLACK);
 
         let mut d3d: RaylibMode3D<'_, RaylibDrawHandle<'_>> = d.begin_mode3D(camera);
 
         dev_map.draw(&mut d3d);
 
         if debug_mode {
-            d3d.draw_grid(25, 1.0);
-            dev_map.debug_print();
+            d3d.draw_grid(50, 1.0);
+            
+            
         }
 
         drop(d3d);
+
+        if debug_mode {
+            d.draw_fps(5, 0);
+            d.draw_text(dt.to_string().as_str(), 5, 20, 20, Color::GRAY);
+        }
+
         drop(d);
         
         
