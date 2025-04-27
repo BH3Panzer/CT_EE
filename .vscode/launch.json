@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'CT_EE'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=CT_EE",
+                    "--package=CT_EE"
+                ],
+                "filter": {
+                    "name": "CT_EE",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'CT_EE'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=CT_EE",
+                    "--package=CT_EE"
+                ],
+                "filter": {
+                    "name": "CT_EE",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
