@@ -1,4 +1,4 @@
-use raylib::prelude::*;
+use raylib::{ffi::GetApplicationDirectory, prelude::*};
 
 pub struct Ressource {
     model: Model,
