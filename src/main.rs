@@ -30,15 +30,36 @@ fn main() {
         80.0,
     );
 
+    let mut shader = rl.load_shader(
+        &thread,
+        Some("src/assets/shaders/basic_lighting.vs"),
+        Some("src/assets/shaders/basic_lighting.fs"),
+    );
+
+    let ambient_loc = shader.get_shader_location("ambient");
+    let viewpos_loc = shader.get_shader_location("viewPos");
+    // Light uniforms:
+    let light0_pos_loc  = shader.get_shader_location("light0.position");
+    let light0_color_loc = shader.get_shader_location("light0.color");
+    let ambient = Vector4::new(0.5, 0.5, 0.5, 1.0);
+
+
+
+
     let mut dev_map: map::Map = map::Map::new(5.0);
 
-    dev_map.dev_gen(&mut rl, &thread);
+    dev_map.dev_gen(&mut rl, &thread, &shader);
     
     while !rl.window_should_close() {
         dt = rl.get_frame_time();
         if rl.is_key_pressed(KeyboardKey::KEY_F1) {
             debug_mode = !debug_mode;
         }
+
+        shader.set_shader_value(ambient_loc, ambient);
+        shader.set_shader_value(viewpos_loc, camera.position);
+        shader.set_shader_value(light0_color_loc, Vector4::new(1.0, 1.0, 1.0, 1.0));
+        shader.set_shader_value(light0_pos_loc, Vector3::new(5.0, 5.0, 0.0));
 
         handle_camera(&mut camera, dt, &mut rl);
 

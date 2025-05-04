@@ -1,7 +1,9 @@
-use raylib::{ffi::GetApplicationDirectory, prelude::*};
+use raylib::prelude::*;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 pub struct Ressource {
-    model: Model,
+    model: Arc<Mutex<Model>>,
     position: Vector3,
     rotation: Vector3,
     scale: f32,
@@ -10,7 +12,7 @@ pub struct Ressource {
 }
 
 impl Ressource {
-    pub fn new(model: Model, position: Vector3, rotation: Vector3, scale: f32, typ: String, amount: u32) -> Self {
+    pub fn new(model: Arc<Mutex<Model>>, position: Vector3, rotation: Vector3, scale: f32, typ: String, amount: u32) -> Self {
         Ressource {
             model,
             position,
@@ -21,8 +23,8 @@ impl Ressource {
         }
     }
 
-    pub fn get_model(&self) -> &Model {
-        &self.model
+    pub fn get_model(&self) -> std::sync::MutexGuard<'_, Model> {
+        self.model.lock().unwrap()
     }
 
     pub fn get_position(&self) -> &Vector3 {
