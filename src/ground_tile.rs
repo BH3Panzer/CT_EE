@@ -31,4 +31,8 @@ impl GroundTile {
     pub fn get_position(&self) -> &Vector3 {
         &self.position
     }
+
+    pub fn get_rotation(&self) -> &Vector3 {
+        &self.rotation
+    }
 }

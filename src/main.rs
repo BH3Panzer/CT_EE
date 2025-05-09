@@ -1,4 +1,4 @@
-use raylib::prelude::*;
+use raylib::{ffi::RL_CULL_DISTANCE_FAR, prelude::*};
 mod ressources;
 mod unit;
 mod map;
@@ -16,6 +16,7 @@ fn main() {
     if !rl.is_window_fullscreen() {
         rl.toggle_fullscreen();
     }
+    
 
     let screen_width: i32 = rl.get_screen_width();
     let screen_height: i32 = rl.get_screen_height();
@@ -41,14 +42,12 @@ fn main() {
     // Light uniforms:
     let light0_pos_loc  = shader.get_shader_location("light0.position");
     let light0_color_loc = shader.get_shader_location("light0.color");
-    let light_pos = Vector3::new(-20.0, 20.0, 200.0);
-    let light_color = Vector3::new(1.0, 1.0, 1.0);
+    let light_pos = Vector3::new(-20.0, 50.0, 20.0);
+    let light_color = Vector3::new(0.8, 0.8, 0.8);
     let ambient = Vector4::new(0.3, 0.3, 0.3, 1.0);
 
 
-
-
-    let mut dev_map: map::Map = map::Map::new(5.0);
+    let mut dev_map: map::Map = map::Map::new(10.0);
 
     dev_map.dev_gen(&mut rl, &thread, &shader);
     
@@ -62,6 +61,8 @@ fn main() {
         shader.set_shader_value(viewpos_loc, camera.position);
         shader.set_shader_value(light0_color_loc, light_color);
         shader.set_shader_value(light0_pos_loc, light_pos);
+
+        
 
         handle_camera(&mut camera, dt, &mut rl);
 
