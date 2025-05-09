@@ -1,21 +1,21 @@
 #version 330
 
-// Built-in raylib locations
-uniform mat4 matModel;      // model (world) matrix
-uniform mat4 matView;       // view matrix
-uniform mat4 matProjection; // projection matrix
+uniform mat4 matModel;
+uniform mat4 matView;
+uniform mat4 matProjection;
 
 in vec3 vertexPosition;
 in vec3 vertexNormal;
+in vec2 vertexTexCoord;
 
 out vec3 fragPos;
 out vec3 fragNormal;
+out vec2 fragTexCoord;
 
 void main() {
-    // Position in world space
-    fragPos    = vec3(matModel * vec4(vertexPosition, 1.0));
-    // Transform normal by model matrix (ignore translation)
+    fragPos = vec3(matModel * vec4(vertexPosition, 1.0));
     fragNormal = mat3(transpose(inverse(matModel))) * vertexNormal;
-    // Final clip-space position
+    fragTexCoord = vertexTexCoord;
+
     gl_Position = matProjection * matView * vec4(fragPos, 1.0);
 }

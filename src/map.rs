@@ -40,13 +40,13 @@ impl Map {
         let tree_model = Arc::new(Mutex::new(rl.load_model(thread, "src/assets/models/arbre.gltf").unwrap()));
         let ground_model = Arc::new(Mutex::new(rl.load_model(thread, "src/assets/models/grass_ground.gltf").unwrap()));
         for material in food_model.lock().unwrap().materials_mut() {
-            material.shader = **shader;
+            material.shader = *shader.as_ref();
         }
         for material in tree_model.lock().unwrap().materials_mut() {
-            material.shader = **shader;
+            material.shader = *shader.as_ref();
         }
         for material in ground_model.lock().unwrap().materials_mut() {
-            material.shader = **shader;
+            material.shader = *shader.as_ref();
         }
 
         for x in 0..self.map_size as i32 * 8 {

@@ -41,7 +41,9 @@ fn main() {
     // Light uniforms:
     let light0_pos_loc  = shader.get_shader_location("light0.position");
     let light0_color_loc = shader.get_shader_location("light0.color");
-    let ambient = Vector4::new(0.5, 0.5, 0.5, 1.0);
+    let light_pos = Vector3::new(-20.0, 20.0, 200.0);
+    let light_color = Vector3::new(1.0, 1.0, 1.0);
+    let ambient = Vector4::new(0.3, 0.3, 0.3, 1.0);
 
 
 
@@ -58,8 +60,8 @@ fn main() {
 
         shader.set_shader_value(ambient_loc, ambient);
         shader.set_shader_value(viewpos_loc, camera.position);
-        shader.set_shader_value(light0_color_loc, Vector4::new(1.0, 1.0, 1.0, 1.0));
-        shader.set_shader_value(light0_pos_loc, Vector3::new(5.0, 5.0, 0.0));
+        shader.set_shader_value(light0_color_loc, light_color);
+        shader.set_shader_value(light0_pos_loc, light_pos);
 
         handle_camera(&mut camera, dt, &mut rl);
 
