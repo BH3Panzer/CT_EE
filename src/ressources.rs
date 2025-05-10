@@ -34,4 +34,8 @@ impl Ressource {
     pub fn get_scale(&self) -> f32 {
         self.scale
     }
+
+    pub fn get_rotation(&self) -> &Vector3 {
+        &self.rotation
+    }
 }

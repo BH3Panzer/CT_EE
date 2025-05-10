@@ -1,4 +1,4 @@
-use raylib::{ffi::RL_CULL_DISTANCE_FAR, prelude::*};
+use raylib::prelude::*;
 mod ressources;
 mod unit;
 mod map;
@@ -42,9 +42,14 @@ fn main() {
     // Light uniforms:
     let light0_pos_loc  = shader.get_shader_location("light0.position");
     let light0_color_loc = shader.get_shader_location("light0.color");
-    let light_pos = Vector3::new(-20.0, 50.0, 20.0);
-    let light_color = Vector3::new(0.8, 0.8, 0.8);
-    let ambient = Vector4::new(0.3, 0.3, 0.3, 1.0);
+    let light_pos = Vector3::new(-100.0, 50.0, 150.0);
+    let light_color = Vector3::new(0.95, 0.95, 0.95);
+    let ambient = Vector4::new(0.35, 0.6, 0.6, 1.0);
+
+    shader.set_shader_value(ambient_loc, ambient);
+    shader.set_shader_value(viewpos_loc, camera.position);
+    shader.set_shader_value(light0_color_loc, light_color);
+    shader.set_shader_value(light0_pos_loc, light_pos);
 
 
     let mut dev_map: map::Map = map::Map::new(10.0);
@@ -56,11 +61,6 @@ fn main() {
         if rl.is_key_pressed(KeyboardKey::KEY_F1) {
             debug_mode = !debug_mode;
         }
-
-        shader.set_shader_value(ambient_loc, ambient);
-        shader.set_shader_value(viewpos_loc, camera.position);
-        shader.set_shader_value(light0_color_loc, light_color);
-        shader.set_shader_value(light0_pos_loc, light_pos);
 
         
 

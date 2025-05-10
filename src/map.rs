@@ -55,7 +55,7 @@ impl Map {
 
         for x in 0..self.map_size as i32 * 8 {
             for y in 0..self.map_size as i32 * 8 {
-                let mut rotation: f32 = 0.0;
+                let rotation: f32;
                 let rotation_chance: u8 = rand::rng().random_range(0..3);
                 if rotation_chance == 0 {
                     rotation = 0.0;
@@ -73,20 +73,43 @@ impl Map {
         
         
         for _ in 0..5 {
+            let rotation: f32;
+            let rotation_chance: u8 = rand::rng().random_range(0..3);
+            if rotation_chance == 0 {
+                rotation = 0.0;
+            } else if rotation_chance == 1 {
+                rotation = 90.0;
+            } else if rotation_chance == 2 {
+                rotation = 180.0;            
+            } else {
+                rotation = 270.0;
+            }
             
-            let food_spot: Ressource = Ressource::new(Arc::clone(&food_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, 0.0, 0.0), 1.0, "food".to_string(), 100);
+            let food_spot: Ressource = Ressource::new(Arc::clone(&food_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, rotation, 0.0), 1.0, "food".to_string(), 100);
             self.add_ressource(food_spot);
         }
         
         
         
         for _ in 0..500 {
-            let tree = Ressource::new(Arc::clone(&tree_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, 0.0, 0.0), 2.0, "tree".to_string(), 100);
+            let rotation: u16 = rand::rng().random_range(0..360);
+            let tree = Ressource::new(Arc::clone(&tree_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, rotation as f32, 0.0), 3.0, "tree".to_string(), 200);
             self.add_ressource(tree);
         }
 
         for _ in 0..3 {
-            let rock_spot: Ressource = Ressource::new(Arc::clone(&rock_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, 0.0, 0.0), 1.0, "rock".to_string(), 100);
+            let rotation: f32;
+            let rotation_chance: u8 = rand::rng().random_range(0..3);
+            if rotation_chance == 0 {
+                rotation = 0.0;
+            } else if rotation_chance == 1 {
+                rotation = 90.0;
+            } else if rotation_chance == 2 {
+                rotation = 180.0;
+            } else {
+                rotation = 270.0;
+            }
+            let rock_spot: Ressource = Ressource::new(Arc::clone(&rock_model), Vector3::new(rand::rng().random_range(0.0..self.map_size * 16.0), 0.0, rand::rng().random_range(0.0..self.map_size * 16.0)), Vector3::new(0.0, rotation, 0.0), 1.0, "rock".to_string(), 100);
             self.add_ressource(rock_spot);
         }
     }
@@ -100,7 +123,7 @@ impl Map {
         }
         for ressource in self.ressources.iter() {
             if unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).x} <= screen_width as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).x} >= 0.0 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).y} <= screen_height as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).y} >= 0.0 {
-                d3d.draw_model(&*ressource.get_model(), ressource.get_position(), ressource.get_scale(), Color::RAYWHITE);
+                d3d.draw_model_ex(&*ressource.get_model(), ressource.get_position(), Vector3::new(0.0, 1.0, 0.0), ressource.get_rotation().y, Vector3::new(ressource.get_scale(), ressource.get_scale(), ressource.get_scale()), Color::RAYWHITE);
             }
         }
     }

@@ -1,7 +1,9 @@
+use std::sync::{Arc, Mutex};
+
 use raylib::prelude::*;
 
 pub struct Unit {
-    model: Model,
+    model: Arc<Mutex<Model>>,
     position: Vector3,
     rotation: Vector3,
     scale: Vector3,
@@ -9,7 +11,7 @@ pub struct Unit {
 }
 
 impl Unit {
-    pub fn new(model: Model, position: Vector3, rotation: Vector3, scale: Vector3, typ: String) -> Self {
+    pub fn new(model: Arc<Mutex<Model>>, position: Vector3, rotation: Vector3, scale: Vector3, typ: String) -> Self {
         Unit {
             model,
             position,
