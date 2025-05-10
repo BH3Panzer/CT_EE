@@ -115,15 +115,16 @@ impl Map {
     }
 
     pub fn draw(&mut self, d3d: &mut RaylibMode3D<'_, RaylibDrawHandle<'_>>, camera: &Camera3D, screen_width: i32, screen_height: i32) {
+        let rotation_axis: Vector3 = Vector3::new(0.0, 1.0, 0.0);
         for tile in self.tiles.iter() {
             if unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(tile.get_position()), Into::into(camera)).x} <= screen_width as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(tile.get_position()), Into::into(camera)).x} >= 0.0 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(tile.get_position()), Into::into(camera)).y} <= screen_height as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(tile.get_position()), Into::into(camera)).y} >= 0.0 {
-                d3d.draw_model_ex(&*tile.get_model(), tile.get_position(), Vector3::new(0.0, 1.0, 0.0), tile.get_rotation().y, Vector3::new(tile.get_scale(), tile.get_scale(), tile.get_scale()), Color::RAYWHITE);
+                d3d.draw_model_ex(&*tile.get_model(), tile.get_position(), rotation_axis, tile.get_rotation().y, Vector3::new(tile.get_scale(), tile.get_scale(), tile.get_scale()), Color::RAYWHITE);
             }
             
         }
         for ressource in self.ressources.iter() {
             if unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).x} <= screen_width as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).x} >= 0.0 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).y} <= screen_height as f32 && unsafe {GetWorldToScreen(raylib::ffi::Vector3::from(ressource.get_position()), Into::into(camera)).y} >= 0.0 {
-                d3d.draw_model_ex(&*ressource.get_model(), ressource.get_position(), Vector3::new(0.0, 1.0, 0.0), ressource.get_rotation().y, Vector3::new(ressource.get_scale(), ressource.get_scale(), ressource.get_scale()), Color::RAYWHITE);
+                d3d.draw_model_ex(&*ressource.get_model(), ressource.get_position(), rotation_axis, ressource.get_rotation().y, Vector3::new(ressource.get_scale(), ressource.get_scale(), ressource.get_scale()), Color::RAYWHITE);
             }
         }
     }
