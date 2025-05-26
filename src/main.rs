@@ -3,8 +3,10 @@ use bevy::text::FontSmoothing;
 use bevy::{prelude::*, window::PresentMode};
 mod map;
 mod camera;
+mod audio;
 use crate::camera::*;
 use crate::map::*;
+use crate::audio::*;
 
 fn main() {
     App::new()
@@ -12,7 +14,7 @@ fn main() {
             primary_window: Some(Window {
                 title: "ChronoTech: Evolution of Empires".into(),
                 name: Some("ChronoTech: Evolution of Empires".into()),
-                resolution: (1280., 920.).into(),
+                resolution: (1280., 720.).into(),
                 present_mode: PresentMode::AutoNoVsync,
                 resizable: true,
                 ..default()
@@ -41,6 +43,7 @@ fn main() {
         )
         .add_plugins(CameraPlugin)
         .add_plugins(MapPlugin)
+        .add_plugins(AudioPlugin)
         .add_systems(Startup, setup)
         .run();
 }
