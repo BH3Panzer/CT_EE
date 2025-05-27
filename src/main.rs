@@ -1,9 +1,14 @@
+use std::f32::consts::PI;
+
 use bevy::dev_tools::fps_overlay::{FpsOverlayConfig, FpsOverlayPlugin};
+use bevy::pbr::{CascadeShadowConfigBuilder, ShadowFilteringMethod};
 use bevy::text::FontSmoothing;
 use bevy::{prelude::*, window::PresentMode};
+use ressource::RessourcePlugin;
 mod map;
 mod camera;
 mod audio;
+mod ressource;
 use crate::camera::*;
 use crate::map::*;
 use crate::audio::*;
@@ -43,19 +48,28 @@ fn main() {
         )
         .add_plugins(CameraPlugin)
         .add_plugins(MapPlugin)
+        .add_plugins(RessourcePlugin)
         .add_plugins(AudioPlugin)
         .add_systems(Startup, setup)
         .run();
 }
 
 fn setup(mut commands: Commands) {
-    commands.spawn((PointLight {
+    commands.spawn(
+        ShadowFilteringMethod::Temporal
+    );
+    commands.spawn((
+        DirectionalLight {
+            illuminance: 4_000.,
             shadows_enabled: true,
-            range: 5_000_000.,
-            radius: 3_000.,
-            intensity: 150_000_000_000.,
             ..default()
         },
-        Transform::from_xyz(50., 2000., 50.)
+        Transform::from_rotation(Quat::from_axis_angle(Vec3 { x: 1., y: 0., z: 1. }, PI/4. * 5.)),
+        CascadeShadowConfigBuilder {
+            first_cascade_far_bound: 15.0,
+            maximum_distance: 120.0,
+            ..default()
+        }
+        .build(),
     ));
 }
