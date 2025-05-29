@@ -1,7 +1,7 @@
 use std::f32::consts::PI;
 
 use bevy::dev_tools::fps_overlay::{FpsOverlayConfig, FpsOverlayPlugin};
-use bevy::pbr::{CascadeShadowConfigBuilder, ShadowFilteringMethod};
+use bevy::pbr::{CascadeShadowConfigBuilder};
 use bevy::text::FontSmoothing;
 use bevy::{prelude::*, window::PresentMode};
 use ressource::RessourcePlugin;
@@ -41,7 +41,7 @@ fn main() {
                     // We can also change color of the overlay
                     text_color: Color::srgb(0., 1.0, 0.),
                     // We can also set the refresh interval for the FPS counter
-                    refresh_interval: core::time::Duration::from_millis(800),
+                    refresh_interval: core::time::Duration::from_millis(500),
                     enabled: true,
                 },
             },
@@ -55,9 +55,6 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-    commands.spawn(
-        ShadowFilteringMethod::Temporal
-    );
     commands.spawn((
         DirectionalLight {
             illuminance: 4_000.,
@@ -66,8 +63,7 @@ fn setup(mut commands: Commands) {
         },
         Transform::from_rotation(Quat::from_axis_angle(Vec3 { x: 1., y: 0., z: 1. }, PI/4. * 5.)),
         CascadeShadowConfigBuilder {
-            first_cascade_far_bound: 15.0,
-            maximum_distance: 120.0,
+            maximum_distance: 75.0,
             ..default()
         }
         .build(),

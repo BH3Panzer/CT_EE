@@ -16,11 +16,7 @@ struct Ressource {
 
 #[derive(Component)]
 enum RessourceType {
-    Wood,
-    Stone,
-    Food,
-    Gold,
-    Iron
+    Wood
 }
 
 fn generate_ressources(mut commands: Commands, asset_server: Res<AssetServer>) {
@@ -28,13 +24,13 @@ fn generate_ressources(mut commands: Commands, asset_server: Res<AssetServer>) {
     let scene_root = &SceneRoot(scene_handle);
     let mut rng = rand::rng();
     
-    for _ in 0..5000 {
+    for _ in 0..50000 {
         commands.spawn((
             Ressource {
                 ressource_type: RessourceType::Wood,
                 quantity: 100
             },
-            Transform::from_xyz(rng.random_range(0..(50 * 4)-2) as f32, 0., rng.random_range(0..(50 * 4)-2) as f32),
+            Transform::from_xyz(rng.random_range(0..(300 * 4)) as f32, 0., rng.random_range(0..(300 * 4)) as f32).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..6.28))),
             scene_root.clone()
         ));
     }

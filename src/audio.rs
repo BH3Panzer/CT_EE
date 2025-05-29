@@ -1,4 +1,6 @@
-use bevy::prelude::*;
+
+
+use bevy::{audio::Volume, prelude::*};
 pub struct AudioPlugin;
 
 impl Plugin for AudioPlugin {
@@ -7,10 +9,11 @@ impl Plugin for AudioPlugin {
     }
 }
 
-fn start_title_theme(asset_server: Res<AssetServer>, mut commands: Commands) {
+fn start_title_theme(asset_server: Res<AssetServer>, mut commands: Commands, mut volume: ResMut<GlobalVolume>) {
     commands.spawn(
         AudioPlayer::new(
             asset_server.load("audio/CT_EE - Title.ogg")
-        )
+        ),
     );
+    volume.volume = Volume::Linear(0.);
 }
