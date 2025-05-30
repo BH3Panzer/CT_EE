@@ -61,6 +61,6 @@ fn setup(mut commands: Commands) {
             shadows_enabled: true,
             ..default()
         },
-        Transform::from_rotation(Quat::from_rotation_x(PI/4. * 6.)),
+        Transform::from_rotation(Quat::from_rotation_x(PI/6. * 8.)),
     ));
 }
