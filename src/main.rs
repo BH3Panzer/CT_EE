@@ -57,15 +57,10 @@ fn main() {
 fn setup(mut commands: Commands) {
     commands.spawn((
         DirectionalLight {
-            illuminance: 4_000.,
+            illuminance: 2_500.,
             shadows_enabled: true,
             ..default()
         },
-        Transform::from_rotation(Quat::from_axis_angle(Vec3 { x: 1., y: 0., z: 1. }, PI/4. * 5.)),
-        CascadeShadowConfigBuilder {
-            maximum_distance: 75.0,
-            ..default()
-        }
-        .build(),
+        Transform::from_rotation(Quat::from_rotation_x(PI/4. * 6.)),
     ));
 }
