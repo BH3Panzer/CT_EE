@@ -1,14 +1,15 @@
 use std::f32::consts::PI;
 
 use bevy::dev_tools::fps_overlay::{FpsOverlayConfig, FpsOverlayPlugin};
-use bevy::pbr::{CascadeShadowConfigBuilder};
 use bevy::text::FontSmoothing;
 use bevy::{prelude::*, window::PresentMode};
 use ressource::RessourcePlugin;
+use ui::UIPlugin;
 mod map;
 mod camera;
 mod audio;
 mod ressource;
+mod ui;
 use crate::camera::*;
 use crate::map::*;
 use crate::audio::*;
@@ -50,6 +51,7 @@ fn main() {
         .add_plugins(MapPlugin)
         .add_plugins(RessourcePlugin)
         .add_plugins(AudioPlugin)
+        .add_plugins(UIPlugin)
         .add_systems(Startup, setup)
         .run();
 }
@@ -57,7 +59,7 @@ fn main() {
 fn setup(mut commands: Commands) {
     commands.spawn((
         DirectionalLight {
-            illuminance: 2_500.,
+            illuminance: 2_000.,
             shadows_enabled: true,
             ..default()
         },

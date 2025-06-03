@@ -42,10 +42,10 @@ fn move_camera(query: Query<(&mut Transform, &mut MousePos), With<Camera3d>>, ti
 
 
         for event in mouse_wheel_events.read() {
-            if event.y > 0. && components.0.translation.y != 5. {
+            if event.y > 0. && components.0.translation.y != 2. {
                 components.0.translation.y -= 1500. * time.delta_secs();
                 components.0.translation.z -= 750. * time.delta_secs();
-            } else if event.y < 0. && components.0.translation.y != 40. {
+            } else if event.y < 0. && components.0.translation.y != 80. {
                 components.0.translation.y += 1500. * time.delta_secs();
                 components.0.translation.z += 750. * time.delta_secs();
             }
@@ -75,10 +75,10 @@ fn move_camera(query: Query<(&mut Transform, &mut MousePos), With<Camera3d>>, ti
             components.0.translation.z += 25. * time.delta_secs();
         }
 
-        if components.0.translation.y < 5. {
-            components.0.translation.y = 5.;
-        } else if components.0.translation.y > 40. {
-            components.0.translation.y = 40.;
+        if components.0.translation.y < 2. {
+            components.0.translation.y = 2.;
+        } else if components.0.translation.y > 80. {
+            components.0.translation.y = 80.;
         }
 
     }
