@@ -14,7 +14,6 @@ struct Ressource {
     quantity: u32
 }
 
-#[derive(Component)]
 enum RessourceType {
     Wood,
     Food,

@@ -10,9 +10,13 @@ mod camera;
 mod audio;
 mod ressource;
 mod ui;
+mod unit;
+mod unit_type;
+mod team;
 use crate::camera::*;
 use crate::map::*;
 use crate::audio::*;
+use crate::unit::UnitPlugin;
 
 fn main() {
     App::new()
@@ -52,6 +56,7 @@ fn main() {
         .add_plugins(RessourcePlugin)
         .add_plugins(AudioPlugin)
         .add_plugins(UIPlugin)
+        .add_plugins(UnitPlugin)
         .add_systems(Startup, setup)
         .run();
 }
